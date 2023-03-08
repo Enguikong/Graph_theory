@@ -1,0 +1,250 @@
+\documentclass{article}
+\usepackage{xeCJK,amsmath,geometry,float,graphicx,amssymb,zhnumber,booktabs,setspace,tasks,verbatim,amsthm,amsfonts,mathdots}
+\usepackage{listings,xcolor,diagbox}
+\geometry{a4paper,scale=0.8}  
+\renewcommand\arraystretch{2}
+\title{图论作业 (Week 11 \& Week 12)}
+\author{PB20000113孔浩宇}
+\begin{document}
+\maketitle
+\section*{Ch7}
+\subsection*{2.}
+\begin{proof}
+    将图$G$分为$\chi (G)$个内部无连边的子图，记为划分$C= (V_1,\ldots,V_{\chi (G)}),\ v_i=|V_i|$.则
+    \[
+        2\varepsilon 
+        \leq \sum\limits_{i=1}^{\chi (G)} v_i \cdot (\nu - v_i)
+        =\sum\limits_{i=1}^{\chi (G)} v_i \nu - \sum\limits_{i=1}^{\chi (G)} v_i^2
+        =\nu ^2 - \sum\limits_{i=1}^{\chi (G)} v_i^2.
+    \]
+    又有
+    \[
+        \chi(G) \cdot \sum\limits_{i=1}^{\chi (G)} v_i^2
+        \geq {\left(\sum\limits_{i=1}^{\chi (G)} v_i \right)}^2
+        \ \Rightarrow\ 
+        \nu ^2 -\sum\limits_{i=1}^{\chi (G)} v_i^2
+        \leq 2 \varepsilon \leq \nu ^2 \left(1-\displaystyle{\frac{1}{\chi (G)}}\right)
+    \]
+    可得
+    \[
+        \chi (G) \geq \displaystyle{\frac{\nu ^2}{\nu ^2 -2\varepsilon }}.
+    \]
+\end{proof}
+
+\subsection*{4.}
+\begin{proof}
+    不妨设$\chi (G)\geq 6$，则有无交划分$C= (V_1 ,\ V_2,\ \ldots ,\ V_k)\ (k\geq 6)$.取顶点导出子图
+    \[
+        \begin{cases}
+            \ G_1&= G[V_1 \cup V_2 \cup V_3]\\
+            \\
+            \ G_2&= G[V_4 \cup V_5 \cup V_6]
+        \end{cases}
+        \ \Rightarrow\ 
+        \chi(G_1)=\chi(G_2)=3
+        \ \Rightarrow\ 
+        G_1, G_2\mbox{均含奇圈}
+    \]
+    又
+    \[
+        V(G_1) \cap V(G_2) =\phi
+        \ \Rightarrow\ 
+        \mbox{矛盾！}
+    \]
+    即证$\chi (G)\leq 5$.
+\end{proof}
+
+\subsection*{6.}
+\begin{proof}
+    记$G$的最小着色划分为$C= (V_1 ,\ V_2,\ \ldots ,\ V_{\chi (G)})$，
+    不妨设$\max \{|V_i|\ 1\leq i\leq \chi (G) \} = |V_k|=v_k$.则
+    \[
+        v_k \leq \nu -(\chi (G)-1)
+    \]
+    又对于图$G^c$，$\{uv |\ u\in V_i,\ v\in V_j,\ 1\leq i\neq j\leq \chi(G) \}=\phi$，存在着色
+    \[
+        C={(M_1,\ M_2,\ \ldots,\ M_{v_k})},\ Card [M_i\cap V_j]\leq 1
+        \ \Rightarrow\ 
+        \chi (G^c) = v_k 
+    \]
+    可得
+    \[
+        \chi (G) +\chi (G^c) 
+        \leq \chi (G) +\nu -(\chi (G) -1)
+        =\nu + 1.
+    \]
+\end{proof}
+
+\subsection*{8.}
+    记该图为$G$，中心顶点编号为$v_0$，
+    圈上的顶点按顺时针依次为$v_1,v_2,···,v_{\nu-1}$。显然
+    \[
+        \chi '(G)\geq \Delta(G) =\deg (v_0)=\nu -1.
+    \]
+
+    考虑下面的$\nu-1$着色方法：
+    \[
+        \begin{cases}
+            &v_0 \mbox{与} v_i \mbox{之间着第$i$色} (1\leq i\leq \nu-1)\\
+            \\
+            &v_i \mbox{与} v_{i+1} \mbox{之间着第} i+2 \mbox{(模$k$意义下)色}
+        \end{cases}
+        \ \Rightarrow\ 
+        \mbox{可知其为$G$的正常着色}
+        \ \Rightarrow\ 
+        \chi '(G)\leq \nu - 1.
+    \]
+    即
+    \[
+        \chi '(G)=\nu -1.
+    \]
+\subsection*{14.}
+\begin{enumerate}
+    \item []根据矩阵$A = {(a_{ij} )}_{4×5}$构造二分图
+    \[
+        G = (X, E, Y),\ 
+        X =\{ x_1, x_2, x_3, x_4 \},
+        \ Y = \{y_1, y_2, y_3, y_4, y_5\},
+        \ E = \{x_i y_j |\ a_{ij}\geq 0 \}.
+    \]
+    \item [(1)]最少需要$\Delta=4$个课时。
+    \item [(2)]有$\lceil\frac{\varepsilon}{\Delta}\rceil =\lceil\frac{13}{4}\rceil=4$，最少需要4间教室.
+    课表安排如图 (同时满足 (1) (2) 要求)
+    \begin{table*}[htbp]
+        \centering
+        \begin{tabular}[]{c|cccc}
+        \diagbox{教师}{课时} & 1 & 2 & 3 & 4 \\
+        \hline
+        $x_1$ & $y_1$ & $ - $ & $y_3$ & $ - $ \\
+        $x_2$ & $y_3$ & $y_4$ & $y_1$ & $ - $ \\
+        $x_3$ & $y_2$ & $y_3$ & $y_4$ & $y_5$ \\
+        $x_4$ & $y_4$ & $y_5$ & $y_5$ & $y_2$ 
+    \end{tabular}
+    \end{table*}
+    
+    
+\end{enumerate}
+
+\subsection*{17.}
+\begin{proof}
+    \[
+        G\mbox{为极大平面图}
+        \Rightarrow
+        \begin{cases}
+            & G\mbox{每个面均为三角形}\\
+            \\
+            & G\mbox{无环}, G^*\mbox{无桥}
+        \end{cases}
+        \Rightarrow
+        \begin{cases}
+            \ G^* & \mbox{为3次正则图}\\
+            \\
+            \ G^* & \mbox{为2-边连通的}
+        \end{cases}
+    \]
+\end{proof}
+
+\clearpage
+\section*{Ch8}
+\subsection*{1.}
+    不妨设顶点为$v_1, v_2 , v_3 , v_4 , v_5$.
+    \begin{enumerate}
+        \item [(1)]定向与$v_1$关联且未定向的边
+        \[
+            \mbox{共有4条，且等价，故共有5种定向方式}
+        \]
+        \item [(2)]定向与$v_2$关联且未定向的边
+        \[
+            \mbox{共有3条，且等价，故共有4种定向方式}
+        \]
+        \item [(3)]定向与$v_3$关联且未定向的边
+        \[
+            \mbox{共有2条，且等价，故共有3种定向方式}
+        \]
+        \item [(4)]定向与$v_4$关联且未定向的边
+        \[
+            \mbox{共有1条，故共有2种定向方式}
+        \]
+        \item [(5)]不存在与$v_5$关联且未定向的边，故共有1种定向方式.
+        \item [(6)]又$v_1, v_2 , v_3 , v_4 , v_5$等价，故
+        \[
+            \mbox{共有定向方式}
+            \displaystyle{\frac{5\times 4\times 3\times 2\times 1}{5}}
+            =24\mbox{种}.
+        \]
+    \end{enumerate}
+
+\subsection*{2.}
+\begin{proof}
+    \begin{enumerate}
+        \item []记$|V(D)|=\nu $.
+        \item [(1)]假设$\delta^-\geq 1$，则$\forall\ v\in V(D)$，都有$\deg^- (v)\geq 1$。
+        取$v_1 \in V(D)$，令$S_1 ={v_1}$，则
+        \[
+            \mbox{存在$v_2$使得$(v_2,v_1)\in E(D)$，且$v_2\notin S_1$（否则有有向圈）.}
+        \]
+        
+        令$S_{2}=S_1 \bigcup{v_2}$，再找到$v_3$使得$(v_3,v_2)\in E$，且$v_3 \notin S_2$。
+        以此类推，
+        \[
+            \forall\ S_\nu = V(D) =\{ v_1,v_2,···,v_\nu \},\ 
+            \exists\ v_{\nu+1}\notin S_\nu\ \mbox{且}\ (v_{\nu+1},v_{\nu})\in E(D),\ 
+            \mbox{显然矛盾.}
+        \]
+        故有$\delta^-=0$。
+        \item [(2)]
+        \begin{enumerate}
+            \item []
+            \item [(a)]先证$\delta ^+ =0$
+            \item []假设$\delta^+ \geq 1$，则$\forall\ v\in V(D)$，都有$\deg^+ (v)\geq 1$。
+            取$v_1 \in V(D)$，令$S_1 ={v_1}$，则
+            \[
+                \mbox{存在$v_2$使得$(v_1,v_2)\in E(D)$，且$v_2\notin S_1$（否则有有向圈）.}
+            \]
+            
+            令$S_{2}=S_1 \bigcup{v_2}$，再找到$v_3$使得$(v_2,v_3)\in E$，且$v_3 \notin S_2$。
+            以此类推，
+            \[
+                \forall\ S_\nu = V(D) =\{ v_1,v_2,···,v_\nu \},\ 
+                \exists\ v_{\nu+1}\notin S_\nu\ \mbox{且}\ (v_{\nu},v_{\nu+1})\in E(D),\ 
+                \mbox{显然矛盾.}
+            \]
+            故有$\delta^+=0$。
+            \item [(b)]记$D=D_1$由$\delta ^+ (D_1)=0$可得$\exists\ v_1\in D_1,\ \deg ^+ (v_1)=0$，
+            取$D_2=D_1 -v_1$.
+            \[
+                D_2\subseteq D_1\ \Rightarrow\ 
+                D_2 \mbox{不含有向圈}\ \Rightarrow\ 
+                \exists\ v_2\in D_2,\ \deg^+ (v_2)=0.
+            \]
+            以此类推，可得顶点序列$v_1,\ v_2,\ldots,\ v_{\nu}$，且满足要求.
+        \end{enumerate}
+    \end{enumerate}
+\end{proof}
+
+\subsection*{3.}
+\begin{proof}
+    \begin{enumerate}
+        \item []
+        \item []
+        由奇度顶点为偶数，不妨设$G$中奇度顶点为$v_1,v_2,···,v_{2k}\ (k\in N)$，则
+        \[
+            \mbox{取}E=\{v_i v_{i+k}|\ 1\leq i\leq k \},\ G'=G+E
+            \mbox{为欧拉图，}
+        \]
+        \item []
+        $G'$中存在一条欧拉回路，沿着回路给图中每条边定向得到有向图$D'$，显然有
+        \[
+            \forall\ v \in V,\ 
+            \deg_{D'}^+ (v)=\deg_{D'} ^- (v).
+        \]
+        \item []
+        取$G$的一个定向图$D=D'-E$，从$D'$到$D$，每个顶点关联的边至多减少1，故
+        \[
+            \forall\ v\in V,\ 
+            |\deg_{D}^+ (v)-\deg_{D} ^-(v)|\leq 1.
+        \]
+    \end{enumerate}
+\end{proof}
+
+\end{document}

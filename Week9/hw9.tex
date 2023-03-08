@@ -1,0 +1,250 @@
+\documentclass{article}
+\usepackage{xeCJK,amsmath,geometry,float,graphicx,amssymb,zhnumber,booktabs,setspace,tasks,verbatim,amsthm,amsfonts,mathdots}
+\usepackage{listings,xcolor}
+\geometry{a4paper,scale=0.8}  
+\renewcommand\arraystretch{2}
+\title{图论作业 (第九周)}
+\author{PB20000113孔浩宇}
+\begin{document}
+\maketitle
+\section*{Ch5}
+\subsection*{11.}
+\begin{proof}
+        取$S\subseteq X$，则$(X-S)\cup N(S)$为$G$的一个覆盖.任意$G$的覆盖$C$，记$C\cap X=C_X$，若
+    \[
+    \exists\ u\in (X-C_X) \cup N(C_X) ,\ u\notin\ C
+    \ \Rightarrow\ 
+    \exists\ e=pu\ (e\in E(G)),\ p,u\notin C
+    \ \Rightarrow\ 
+        \mbox{矛盾}.
+    \]
+    即覆盖$C$可以写成$(X-S)\cup N(S)\ (S\subseteq X)$,又
+    \[
+        G\mbox{为二分图}\xrightarrow{\mbox{定理5.2}}
+        \alpha(G)=\beta(G).
+    \]
+    有
+    \begin{align*}
+        \alpha(G)&=\beta(G)\\
+        &=\min |C|\\
+        &=\min\limits_{S\subseteq X} | (X-S)\cup N(S) |\\
+        &=\min\limits_{S\subseteq X} \left(|X-S|+|N(S)| \right)\\
+        &=\min\limits_{S\subseteq X} \left(|X|-|S|+ |N(S) |\right)\\
+        &=|X|-\max\limits_{S\subseteq X} \left(|S|-|N(S)|\right).
+    \end{align*}
+\end{proof}
+
+\subsection*{13.}
+\begin{proof}
+    对于二分图$G=(X,E,Y)$，增加边使得$Y$为完全图，记此时的图为$H$.则$G$中存在将$X$都许配的匹配等价于$H$有完备匹配.
+    $\forall\ S\subseteq X,\ N_{H} (S)=N_{G} (S)$.
+    \begin{enumerate}
+        \item [(1)]必要性：$G$中存在将$X$都许配的匹配.
+        \[
+            \begin{cases}
+                \forall\ S\subseteq X & \xrightarrow{Tutte\mbox{定理}} o(H-N_H (S))\leq |N_H (S)|\\
+                \\
+                \mbox{在}H-N_H (S)\mbox{中},&\forall\ s\in S\mbox{为孤立点}\ \Rightarrow\ |S|\leq o(H- N_H (S))
+            \end{cases}
+            \ \Rightarrow\ 
+            |S|\leq |N_H (S)|=|N_G (S)|.
+        \]
+        \item [(2)]充分性：$\forall\ S\subseteq X,\ |S|\leq |N(S)|$.
+        \[
+            \forall\ V\subseteq\ V(H),\ S=V\cap X,\ W=V\cap Y.
+            \xrightarrow{Y\mbox{为完全图}}
+            H-S\mbox{至多比}H\mbox{多一个奇片}.
+        \]
+        \[
+            \mbox{记}H-W\mbox{中}X\mbox{中的孤立点集合为}S'
+            \ \Rightarrow\ 
+            |N(S')|\leq |W|
+            \ \Rightarrow\ 
+            |S'|\leq |N(S')|\leq |W|.
+        \]
+        \begin{enumerate}
+            \item []若$|S'|=|W|$，则$o(H-W)=|S'|=|W|$.
+            \item []若$|S'|\leq |W|-1$，则$o(H-W)\leq |S'|+1\leq |W|$.
+            \item []若$|S|$为偶数，则$o(H-V)=o(H-W)\leq |W|\leq |V|$.
+            \item []若$|S|$为奇数，则$o(H-S)=o(H-W)+1\leq |W|+1\leq |V|$.
+        \end{enumerate}
+        综上，$\forall\ S\subseteq\ V(H),\ o(H-S)\leq |S|$,由Tutte定理可得，H有完备匹配，即$G$中存在将$X$都许配的匹配.
+    \end{enumerate}
+\end{proof}
+\subsection*{14.}
+\begin{proof}
+    \begin{enumerate}
+        \item []
+        \item []$\forall\ W\subseteq V(G)$，记$G-W$中的奇片为$G_1,\ldots,G_p,\ q_i\ (1\leq i\leq p)=|E_i|,\ E_i=\{uv|\ u\in G_i,q\in W\}$.
+        \[
+            q_i =\sum\limits_{v\in V(G_i)} \deg(v) -2|E(G_i)|=k|V(G_i)|-2|E(G_i)|
+            \xrightarrow{|V(G_i)|\mbox{为奇数}}
+            q_i\mbox{与}k\mbox{奇偶性相同}.
+        \]
+        又$G$是$k-1$边连通的，在删去$G_i$与$W$之间的边后$G$不再连通，有
+        \[
+            q_i\geq k-1,\mbox{又}q_i \mbox{与} k\mbox{奇偶性相同}
+            \ \Rightarrow\ 
+            q_i\geq k.
+        \]
+        于是
+        \[
+            \sum\limits_{i=1}^{p} q_i \geq kp
+            \ \Rightarrow\ 
+            p\leq \displaystyle{\frac{1}{k}}\sum\limits_{i=1}^{p} q_i
+            \leq \displaystyle{\frac{1}{k}}  \deg(v)= |W|.
+        \]
+        若$W=\phi$，由于$\nu(G)$为偶数，此时$p=0=|W|,p\leq |W|$仍成立.即
+        \[
+            \forall\ S\subseteq V(G),\ o(G-S)\leq |S|
+            \ \Rightarrow\ \
+            G\mbox{有完备匹配}.
+        \]
+    \end{enumerate}
+\end{proof}
+\subsection*{16.}
+    \begin{table}[!ht]
+        \centering
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+            一 & 二 & 三 & 四 & 五  \\ \hline
+            a & b & c & e & d,f  \\ \hline
+            a & b & c,d & e & f  \\ \hline
+            a & b & d & c & e,f  \\ \hline
+            a & b & d & c,e & f  \\ \hline
+            a & b,d & c & e & f  \\ \hline
+            a & b,c & d & e & f  \\ \hline
+            a,e & b & d & c & f  \\ \hline
+            a,f & b & c & e & d  \\ \hline
+            a,f & b & d & c & e  \\ \hline
+        \end{tabular}
+    \end{table}
+
+\subsection*{19.}
+\begin{proof}
+    \begin{enumerate}
+        \item []取$x_i\in X,\ y_i\in Y$.
+        \item [(1)]$x_i\in S,\ y_i\in T$.
+        \begin{align*}
+            \widehat{l}(x_i)+\widehat{l}(y_i)
+            &= l(x_i)-\alpha_l+l(y_i)+\alpha_l\\
+            &= l(x_i)+l(y_i)\\
+            &\geq w(x_i y_i).
+        \end{align*}
+
+        \item [(2)]$x_i\in S,\ y_i\notin T$.
+        \begin{align*}
+            \widehat{l}(x_i)+\widehat{l}(y_i)
+            &= l(x_i)-\alpha_l +l(y_i)\\
+            &= l(x_i)+l(y_i)- \min\limits_{x\in X,y\notin Y} \{l(x)+l(y)-w(xy) \}\\
+            &\geq l(x_i)+l(y_i)- \left[l(x_i)+l(y_i)-w(x_i y_i) \right] \\
+            &=w(x_i y_i).
+        \end{align*}
+
+        \item [(3)]$x_i\notin S,\ y_i\in T$.
+        \begin{align*}
+            \widehat{l}(x_i)+\widehat{l}(y_i)
+            &= l(x_i)+l(y_i)+\alpha_{l} \\
+            &\geq l(x_i)+l(y_i)\\
+            &\geq w(x_i y_i).
+        \end{align*}
+
+        \item [(4)]$x_i\notin S,\ y_i\notin T$.
+        \begin{align*}
+            \widehat{l}(x_i)+\widehat{l}(y_i)
+            &= l(x_i)+l(y_i)\\
+            &\geq w(x_i y_i).
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\subsection*{20.}
+\begin{proof}
+    \begin{enumerate}
+        \item []取$x_i\in X,\ y_i\in Y$.
+        \item [(1)]$x_i\in S,\ y_i\in T$.
+        \begin{align*}
+            \widehat{l}(x_i)+\widehat{l}(y_i)
+            &= l(x_i)-\alpha_l+l(y_i)+\alpha_l\\
+            &= l(x_i)+l(y_i)
+        \end{align*}
+        修改前后顶点子集不变.
+
+        \item [(2)]$x_i\in S,\ y_i\notin T$.
+        \begin{align*}
+            \widehat{l}(x_i)+\widehat{l}(y_i)
+            &= l(x_i)-\alpha_l +l(y_i)\\
+            &= l(x_i)+l(y_i)- \min\limits_{x\in X,y\notin Y} \{l(x)+l(y)-w(xy) \}\\
+            &\geq l(x_i)+l(y_i)- \left[l(x_i)+l(y_i)-w(x_i y_i) \right] \\
+            &=w(x_i y_i).
+        \end{align*}
+        且至少存在一对$(x_i,y_i)$使等号成立 (当$x_i,y_i$使得$l(x)+l(y)-w(xy)$最小时)，
+        故把$Y-T$中至少$1$个顶点移入$T$中.
+
+        \item [(3)]$x_i\notin S,\ y_i\in T$.
+        \begin{align*}
+            \widehat{l}(x_i)+\widehat{l}(y_i)
+            &= l(x_i)+l(y_i)+\alpha_{l} \\
+            &\geq l(x_i)+l(y_i)\\
+            &\geq w(x_i y_i).
+        \end{align*}
+        修改前后顶点子集不变.
+
+        \item [(4)]$x_i\notin S,\ y_i\notin T$.
+        \begin{align*}
+            \widehat{l}(x_i)+\widehat{l}(y_i)
+            &= l(x_i)+l(y_i)
+        \end{align*}
+        修改前后顶点子集不变.
+    \end{enumerate}
+    综上，算法第三步修改顶标后，顶点子集元素至少增加一个.
+\end{proof}
+
+\section*{Ch6}
+\subsection*{3.}
+\begin{proof}
+    \begin{enumerate}
+        \item []对$k$进行归纳。
+        \item [(1)]$k=1$时，连通图$G$有2个奇度顶点，则由推论$6.1$可知$G$存在$Euler$迹$C$，显然有
+        \[
+            E(G)=E(C).    
+        \]
+        即$k=1$时结论成立。
+        \item [(2)]设$k=n$时结论成立.则$k=n+1$时，记$G$中奇度顶点集合为$S$，取$u,v\in S$，令
+        \[
+            G'=G\cup uv\ (uv\mbox{为新增的边，重边也无所谓})    
+        \]
+        对于图$G'$，奇度顶点集$S'=S-{u,v},\ |S'|=|S|-2=2n$，由于$k=n$时结论成立，即
+        \[
+            G\mbox{中存在}k\mbox{条不重的行迹}P_1,P_2,\ldots,P_n,\mbox{使得}E(G)=\bigcup_{i=1}^{n}E(P_i).
+        \]
+        不妨设$P_m$中含新增的边$uv$，若$P_m -uv$为G中两条不重的行迹,则记为$P_{n+1},P_{n+2}$，
+        若$P_m-uv$为一条行迹，则分成两条不重的行迹$P_{n+1},P_{n+2}$，此时有
+        \[
+            E(G)=P_1 \cup \cdots \cup P_{m-1} \cup P_{m+1}\cup \cdots P_{n} \cup P_{n+1}\cup P_{n+2}.
+        \]
+        又$P_i\ (1\leq i\leq m-1,m+1\leq i\leq n+2)$不重，即证$k=n+1$时结论也成立.
+    \end{enumerate}
+    综上，即证。
+\end{proof}
+\subsection*{5.}
+定义顶点
+\[
+    V(G)=\mbox{所有由}\alpha,\beta,\gamma\mbox{组成的不重复的三位符号}
+\]
+定义边
+\[
+    E(G)=\{\overrightarrow{uv} |\ u,v\in V(G),u\mbox{可以通过左移之后加上一个字母得到}v\}
+\]
+以$V(G),E(G)$构建有向图$G$.则$\forall\ v\in V(G),\ \deg^{+}(v)=\deg^{-}(v)=3$，
+由定理6.2可得$G$为$Euler$图，可根据$Euler$回路构造队列.如下为其中一条
+\[
+    \rightarrow 
+    \alpha\ \beta\ \alpha\ \alpha\ \alpha\ \gamma\  
+    \alpha\ \beta\ \gamma\ \beta\ \beta\ \beta\ 
+    \alpha\ \beta\ \beta\ \gamma\ \gamma\ \gamma\
+    \alpha\ \gamma\  \gamma\ \beta\ \gamma\ \alpha\
+    \rightarrow
+\]
+
+\end{document}

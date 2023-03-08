@@ -1,0 +1,147 @@
+\documentclass{article}
+\usepackage{xeCJK,amsmath,geometry,graphicx,amssymb,zhnumber,booktabs,setspace,tasks,verbatim,amsthm,amsfonts,mathdots}
+\usepackage{listings,xcolor}
+\geometry{a4paper,scale=0.8}   
+\title{图论作业 (第二周)}
+\author{PB20000113孔浩宇}
+\begin{document}
+\maketitle
+\section*{Ch1}
+\begin{enumerate}
+    \item [4.]\begin{proof}
+        构造图$G=(V,E)$，其中$V$为群体里的人的集合，每个人作为一个顶点，若两个人是朋友，则
+        
+        在两人间连一条边，则每个人p来说,朋友数即为在图$G$中的度数$d(p), d(p)\in \{0,1,\dots,\nu (G)-1\}$.
+
+        假设有$n$个人$(n\geq 2)$,且任两个人朋友数均不同,则$d(p)$有$n$个不同的取值.又$d (p)\in \{0,1,\dots,n-1\}$,
+        
+        若$\exists v\in V,\deg(v)=0$,则$\forall u\in V,d(u) \neq n-1$,$d(p)$至多有$n-1$个不同的取值，即假设不成立，这个群
+        
+        体中至少有两个人朋友数相同.
+    \end{proof}
+    \item [5.]
+    \begin{proof}
+        构造图$G=(V,E)$，其中$V$为人的集合，每个人作为一个顶点，若两个人认识，则在两人间连一条边.
+        \begin{enumerate}
+            \item [(1)]$G=K_{2n}$,显然成立.
+            \item [(2)]$G\neq K_{2n}$,取$u,v\in V,\mbox{且}u\neq v,uv\notin E$.
+            \[d(u)+d(v)\geq 2n \Rightarrow\ \exists\ p,q\in V,\ p\neq q\mbox{且}up,uq,vp,vq\in E.\]
+            此时使$u,v$相对而坐,$p,q$坐$u,v$之间,即可满足每个人旁边都是自己认识的人.
+        \end{enumerate}
+        即证.
+    \end{proof}
+    \item [8.]\begin{proof}
+       $p$为$V'$中顶点,图G中边$pq\left(q\in V(G)- V'\right)$的条数记为$k(p)$.则
+        \[
+            \deg_{G}(p)=\deg_{G[V']}(p)+k(p) \Rrightarrow\ \sum\limits_{v\in V'}\deg_{G}(v)=\sum\limits_{v\in V'} \deg_{G[V']}(v)+\sum\limits_{v\in V'} k(v).
+        \]
+        其中$\sum\limits_{v\in V'} \deg_{G[V']} (v)=2\varepsilon \left(G[V']\right)\ \sum\limits_{v\in V'} k(v)=k, \Rightarrow\ k=\sum\limits_{v\in V'}\deg_{G} (v)-2\varepsilon \left(G[V']\right)$.
+        \begin{enumerate}
+            \item [(1)]$V'$中度数为奇数的顶点数为偶数,即
+            \[
+                \sum\limits_{v\in V'}\deg_{G[V']} (v)\mbox{为偶数}\ \Rightarrow\ k=\sum\limits_{v\in V'}\deg_{G} (v)-2\varepsilon \left(G[V']\right)\mbox{为偶数}.
+            \]
+            \item [(2)]$V'$中度数为奇数的顶点数为奇数,即
+            \[
+                \sum\limits_{v\in V'}\deg_{G[V']} (v)\mbox{为奇数}\ \Rightarrow\ k=\sum\limits_{v\in V'}\deg_{G} (v)-2\varepsilon \left(G[V']\right)\mbox{为奇数}.
+            \]
+        \end{enumerate}
+        即证.
+    \end{proof}
+    \item [15.]\begin{proof}
+        令$H$是$G$的生成子图中边最多的二分图,$V(G)=V(H)=X\cup Y,X\neq \phi,Y\neq \phi,X\cap Y=\phi$.
+        \begin{enumerate}
+            \item [(1)]首先证明$\forall\ x\in X,d_{H}(x)\geqslant d_{G[X]} (x)$.
+            
+            假设\[\exists\ x_0\in X,d_{H}(x_0)< d_{G[X]} (x_0).\]
+            则删去$H$中与$x_0$关联的边,共$d_{H}(x_0)$条,增添边$vx_0\left(vx_0\in E(G),v\in X\right)$,共$d_{G[X]}(x_0)$条.
+
+            记此时的图为$H',X'=X-x_0,Y'=Y+x_0$,则$X'\cup Y'$为$H'$的一个二分划分,且
+            \[\varepsilon\left(H'\right)=\varepsilon\left(H\right)-d_{H}(x_0)+d_{G[X]}(x_0)>\varepsilon\left(H\right)\]
+            与$H$是$G$的生成子图中边最多的二分图矛盾.即证
+            \[\forall\ x\in X,d_{H}(x)\geqslant d_{G[X]} (x),\ \mbox{同理,可证}\ \forall\ y\in X,d_{H}(y)\geqslant d_{G[Y]} (y).\]
+            
+            \item [(2)]$\forall\ x\in X,y\in Y$,
+            \[
+                \begin{cases}
+                    &d_{G}(x) =d_{H}(x)+d_{G[X]}(x)\\
+                    &d_{G}(y) =d_{H}(y)+d_{G[Y]}(y)
+                \end{cases}
+                \xrightarrow[d_{H}(y)\geqslant d_{G[Y]} (y)]{d_{H}(x)\geqslant d_{G[X]} (x)}
+                \begin{cases}
+                    &d_{H}(x)\geqslant d_{G}(x)/2\\
+                    &d_{H}(y)\geqslant d_{G}(y)/2
+                \end{cases}
+            \]
+            即证\[\forall\ u\in V(H)=V(G),d_{H}(u)\geqslant d_{G}(u)/2.\]
+        \end{enumerate}
+    \end{proof}
+    \item [16.]\begin{proof}
+        令$W_n=v_0 v_1\dots v_n$为$G$中最长的轨道.若$n<k$,由$d(v_n)\geqslant \delta (G)\geqslant k>n$,可知
+        \[
+            \exists\ v_{n+1}\in V(G),v_{n+1}\neq v_i(i=1,2,\dots,n),\mbox{且}\ v_n v_{n+1}\in E(G).
+        \]
+        则$W_{n+1}=v_0 v_1 \dots v_n v_{n+1}$为G中的轨道，且长度$n+1>n$,假设不成立，即证$n\geqslant k$.
+    \end{proof}
+\end{enumerate}
+\section*{Ch2}
+\begin{enumerate}
+    \item [2.]设树叶有$x$片,即度为$1$的顶点有$x$个,
+    \[
+        \begin{cases}
+            \ x+\sum\limits_{i=2}^{k} i\cdot n_i&=2\varepsilon(T)\\
+            & \\
+            \qquad \varepsilon(T)&=\nu (T)-1
+        \end{cases}
+        \Rightarrow\ 
+        x+2+\sum\limits_{i=2}^{k} i\cdot n_i =2\cdot \left(x+\sum\limits_{i=2}^{k} n_i\right)
+    \]
+    解得
+    \[
+        x=2+\sum\limits_{i=2}^{k} (i-2)\cdot n_i\ .
+    \]
+    即有$2+\sum\limits_{i=2}^{k} (i-2)\cdot n_i$片树叶.
+    \item [4.]\begin{proof}
+        记$\nu (T)=v$,设$T$中度数大于等于$n$的顶点有$t$个$(t\geqslant 1)$,树叶有$x$片.
+        \begin{enumerate}
+            \item [(1)]$v=1,x=n=0$;
+            \item [(2)]$v=2,n=1,x=2$;
+            \item [(3)]$v\geqslant 3$,首先证明$n\geqslant 2$.假设$n<2$,即$n=0\mbox{或}1$,则
+            \[
+                \sum\limits_{v\in V(T)} \deg(v)=2\varepsilon\left(T\right)=2(v-1),\mbox{又}\sum\limits_{v\in V(T)} \deg(v) \leqslant v\cdot n\leqslant v\leqslant 2(v-1),\mbox{矛盾}.
+            \]
+            即证$n\geqslant 2$,又有
+            \[
+                2\cdot(v-1)=2\cdot\varepsilon\left(T\right)=\sum\limits_{u\in V(T)} \deg(u)\geqslant x+2\cdot(v-x-t)+t\cdot k
+            \]
+            解得
+            \[
+                x\geqslant t\cdot n-2t+2=n+(n-2)(t-1)\geqslant n.
+            \]
+        \end{enumerate}
+        综上，即证$T$至少有$n$片树叶.
+    \end{proof}
+    \item [5.]\begin{proof}记$G_1,G_2,\dots,G_\omega$为图$G$的连通片.
+        \begin{enumerate}
+            \item [(1)]若已知G是森林.则
+            \[
+                \varepsilon\left(G\right)
+                =\sum\limits_{i=1}^{\omega} \varepsilon\left(G_{i}\right)
+                =\sum\limits_{i=1}^{\omega} \left(\nu\left(G_{i}\right)-1 \right)
+                =\nu\left(G\right)-\omega.
+            \]
+            \item [(2)]若已知$\varepsilon=\nu-\omega$.由
+            \[
+                \varepsilon\left(G\right)
+                =\sum\limits_{i=1}^{\omega} \varepsilon\left(G_{i}\right)
+                \geqslant \sum\limits_{i=1}^{\omega} \left(\varepsilon\left(G_{i}\right)-1 \right)
+                =\nu\left(G\right)-\omega,
+                \mbox{取等当且仅当}\ 
+                \forall\ 1\leqslant i\leqslant \omega,\varepsilon\left(G_{i}\right)=\nu\left(G_{i}\right)-1.
+            \]
+            可得$\forall\ 1\leqslant i\leqslant \omega,\varepsilon\left(G_{i}\right)=\nu\left(G_{i}\right)-1$,即$G$的每个连通片都是树,G是森林.
+        \end{enumerate}
+        即证.
+    \end{proof}
+\end{enumerate}
+\end{document}
